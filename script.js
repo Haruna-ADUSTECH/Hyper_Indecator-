@@ -7,24 +7,24 @@ let intervalId;
 
 // Start measurement on button press
 startButton.addEventListener("mousedown", function() {
-    measuring = true;
-    startMeasurement();
+    if (!measuring) {
+        measuring = true;
+        startMeasurement();
+    }
 });
 
-// Stop measurement on button release
-startButton.addEventListener("mouseup", function() {
-    measuring = false;
-    clearInterval(intervalId);
-});
+// Stop measurement on button release or when the mouse leaves the button
+startButton.addEventListener("mouseup", stopMeasurement);
+startButton.addEventListener("mouseleave", stopMeasurement);
 
 function startMeasurement() {
     intervalId = setInterval(function() {
         if (measuring) {
-            // Generate a random heart rate between 60 and 120 BPM
+            // Simulate a random heart rate between 60 and 120 BPM
             const heartRate = Math.floor(Math.random() * (120 - 60 + 1) + 60);
             heartRateDisplay.innerText = "Heart Rate: " + heartRate + " BPM";
 
-            // Compare heart rate to normal blood pressure range
+            // Determine heart rate category
             let result = "";
             if (heartRate < 60) {
                 result = "Your heart rate is below normal. Please consult a doctor.";
@@ -36,4 +36,9 @@ function startMeasurement() {
             resultDisplay.innerText = result;
         }
     }, 1000); // Update every second
+}
+
+function stopMeasurement() {
+    measuring = false;
+    clearInterval(intervalId);
 }
