@@ -1,14 +1,17 @@
 const startButton = document.getElementById("startButton");
 const heartRateDisplay = document.getElementById("heartRateDisplay");
 const resultDisplay = document.getElementById("resultDisplay");
+
 let measuring = false;
 let intervalId;
 
+// Start measurement on button press
 startButton.addEventListener("mousedown", function() {
     measuring = true;
     startMeasurement();
 });
 
+// Stop measurement on button release
 startButton.addEventListener("mouseup", function() {
     measuring = false;
     clearInterval(intervalId);
@@ -17,7 +20,7 @@ startButton.addEventListener("mouseup", function() {
 function startMeasurement() {
     intervalId = setInterval(function() {
         if (measuring) {
-            // Simulate heart rate measurement (between 60 and 120 BPM)
+            // Generate a random heart rate between 60 and 120 BPM
             const heartRate = Math.floor(Math.random() * (120 - 60 + 1) + 60);
             heartRateDisplay.innerText = "Heart Rate: " + heartRate + " BPM";
 
