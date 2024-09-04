@@ -2,12 +2,11 @@ const startButton = document.getElementById("startButton");
 const heartRateDisplay = document.getElementById("heartRateDisplay");
 const resultDisplay = document.getElementById("resultDisplay");
 
-let intervalId; // Declare the interval ID variable outside to allow both start and stop functions to access it
+let intervalId = null; // Variable to store interval ID
 
 // Start measurement on button press
 startButton.addEventListener("mousedown", function() {
-    // Start measuring only if the interval is not already running
-    if (!intervalId) {
+    if (intervalId === null) { // Check if measurement is not already running
         startMeasurement();
     }
 });
@@ -18,7 +17,7 @@ startButton.addEventListener("mouseleave", stopMeasurement);
 
 function startMeasurement() {
     intervalId = setInterval(function() {
-        // Simulate a random heart rate between 60 and 120 BPM
+        // Generate a random heart rate between 60 and 120 BPM
         const heartRate = Math.floor(Math.random() * (120 - 60 + 1) + 60);
         heartRateDisplay.innerText = "Heart Rate: " + heartRate + " BPM";
 
@@ -38,5 +37,5 @@ function startMeasurement() {
 
 function stopMeasurement() {
     clearInterval(intervalId); // Clear the interval to stop the measurement
-    intervalId = null; // Reset the interval ID to allow new measurement to start when the button is pressed again
+    intervalId = null; // Reset interval ID to allow a new measurement to start when the button is pressed again
 }
